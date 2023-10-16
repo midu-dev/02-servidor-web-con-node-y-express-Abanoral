@@ -12,10 +12,10 @@ app.all('/', (req, res) => {
   if (req.method === 'GET') {
     return res.send('<h1>¡Hola mundo!</h1>')
   }
-  res.status(405)
+  return res.status(405).send('<h1>405</h1>')
 })
 
-app.get('./logo.webp', (req, res) => {
+app.all('/logo.webp', (req, res) => {
   if (req.method === 'GET') {
     fs.readFile('./logo.webp', (err, data) => {
       if (err) {
@@ -25,22 +25,21 @@ app.get('./logo.webp', (req, res) => {
       }
     })
   }
-  res.status(405)
+  return res.status(405).send('<h1>405</h1>')
 })
 
 app.all('/404', (req, res) => {
   if (req.method === 'GET') { return res.status(404).send('<h1>404</h1>') }
-  res.status(405)
+  return res.status(405).send('<h1>405</h1>')
 })
 
 app.all('/contacto', (req, res) => {
   if (req.method === 'POST') { return res.status(201).json(req.body) }
-  res.status(405)
+  return res.status(405).send('<h1>405</h1>')
 })
 
 app.use((req, res, next) => {
-  res.status(404)
-  next()
+  return res.status(404).send('<h1>404</h1>')
 })
 
 function startServer () {
